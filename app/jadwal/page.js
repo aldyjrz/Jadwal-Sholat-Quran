@@ -56,6 +56,7 @@ function getNextPrayerKey(prayerTimes) {
 }
 
 export default function JadwalPage() {
+    const [hadist, setHadist] = useState(null);
     const [prayerTimes, setPrayerTimes] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -93,7 +94,10 @@ export default function JadwalPage() {
         }
     };
 
+
+
     useEffect(() => {
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {

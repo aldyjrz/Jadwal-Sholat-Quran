@@ -52,6 +52,8 @@ function getGreeting() {
 }
 
 export default function HomePage() {
+  const [hadist, setHadist] = useState(null);
+
   const { prayerTimes, loading, hijriDate } = usePrayerTimes();
   const [nextPrayer, setNextPrayer] = useState(null);
   const greeting = getGreeting();
@@ -64,6 +66,23 @@ export default function HomePage() {
 
   // Refresh next prayer every minute
   useEffect(() => {
+    async function fetchHadist() {
+      try {
+        const res = await fetch(
+          'https://raw.githubusercontent.com/renomureza/hadis-api-id/refs/heads/main/src/data/bukhari.json'
+        );
+        const data = await res.json();
+
+        const randomIndex = Math.floor(Math.random() * data.length);
+        setHadist(data[randomIndex]);
+      } catch (error) {
+        console.error('Gagal mengambil hadist:', error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchHadist();
     const interval = setInterval(() => {
       if (prayerTimes) {
         setNextPrayer(getNextPrayer(prayerTimes));
@@ -115,6 +134,39 @@ export default function HomePage() {
         ) : (
           <p className={styles.noData}>Memuat data...</p>
         )}
+      </section>
+      <section className={`${styles.nextPrayerCard} glass-card fade-in-up`}>
+        <div className={styles.nextPrayerHeader}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M12 2a4 4 0 0 0-4 4v2H6a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10a2 2 0 0 0-2-2h-2V6a4 4 0 0 0-4-4z" />
+            <circle cx="12" cy="15" r="2" />
+          </svg>
+          <span>Hadist</span>
+        </div>
+
+        <div className={`${styles.hadistCard} glass-card fade-in-up`}>
+          {loading ? (
+
+            <div className={styles.nextPrayerLoading}>    <p>Memuat hadist...</p>
+              <div className="spinner"></div>
+            </div>
+
+          ) : hadist ? (
+            <>
+              <div className={styles.hadistContent}>
+                <p className={styles.hadistNumber}>
+                  HR. Bukhari No. {hadist.number}
+                </p>
+                <p className={styles.hadistText}>
+                  {hadist.id}
+                </p>
+              </div>
+              <div className={styles.hadistIcon}>📖</div>
+            </>
+          ) : (
+            <p>Hadist tidak tersedia</p>
+          )}
+        </div>
       </section>
 
       {/* Quick Access Cards */}
