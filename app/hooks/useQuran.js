@@ -31,6 +31,8 @@ export function useSurahList() {
 
 export function useSurahDetail(surahNumber) {
     const [surah, setSurah] = useState(null);
+    const [translationEn, setTranslationEn] = useState(null);
+    const [translationId, setTranslationId] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -40,16 +42,25 @@ export function useSurahDetail(surahNumber) {
         async function fetchSurah() {
             setLoading(true);
             try {
-                // Fetch Arabic text edition with audio (Mishary Rashid Alafasy)
-                const res = await fetch(
-                    `https://api.alquran.cloud/v1/surah/${surahNumber}/ar.alafasy`
-                );
-                const data = await res.json();
-                if (data.code === 200) {
-                    setSurah(data.data);
+                // Fetch Arabic+audio, English translation, and Indonesian translation in parallel
+                const [arabicRes, enRes, idRes] = await Promise.all([
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/ar.alafasy`),
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/en.asad`),
+                    fetch(`https://api.alquran.cloud/v1/surah/${surahNumber}/id.indonesian`),
+                ]);
+
+                const arabicData = await arabicRes.json();
+                const enData = await enRes.json();
+                const idData = await idRes.json();
+
+                if (arabicData.code === 200) {
+                    setSurah(arabicData.data);
                 } else {
                     setError('Gagal memuat surah');
                 }
+
+                if (enData.code === 200) setTranslationEn(enData.data);
+                if (idData.code === 200) setTranslationId(idData.data);
             } catch (err) {
                 setError('Gagal terhubung ke server');
             } finally {
@@ -59,5 +70,5 @@ export function useSurahDetail(surahNumber) {
         fetchSurah();
     }, [surahNumber]);
 
-    return { surah, loading, error };
+    return { surah, translationEn, translationId, loading, error };
 }

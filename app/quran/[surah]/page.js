@@ -7,13 +7,14 @@ import styles from './page.module.css';
 
 export default function SurahPage({ params }) {
     const { surah: surahNumber } = use(params);
-    const { surah, loading, error } = useSurahDetail(surahNumber);
+    const { surah, translationEn, translationId, loading, error } = useSurahDetail(surahNumber);
     const [playingAyah, setPlayingAyah] = useState(null);
     const [isPlaying, setIsPlaying] = useState(false);
     const [audioProgress, setAudioProgress] = useState(0);
     const [currentTime, setCurrentTime] = useState('0:00');
-    const [duration, setDuration] = useState('0:00');
     const [continuousMode, setContinuousMode] = useState(false);
+    const [showTranslationId, setShowTranslationId] = useState(true);
+    const [showTranslationEn, setShowTranslationEn] = useState(false);
     const audioRef = useRef(null);
 
     const formatTime = (seconds) => {
@@ -25,10 +26,7 @@ export default function SurahPage({ params }) {
 
     const playAyah = (ayah) => {
         if (!ayah.audio) return;
-
-        if (audioRef.current) {
-            audioRef.current.pause();
-        }
+        if (audioRef.current) audioRef.current.pause();
 
         const audio = new Audio(ayah.audio);
         audioRef.current = audio;
@@ -40,15 +38,14 @@ export default function SurahPage({ params }) {
             if (audio.duration) {
                 setAudioProgress((audio.currentTime / audio.duration) * 100);
                 setCurrentTime(formatTime(audio.currentTime));
-                setDuration(formatTime(audio.duration));
             }
         });
 
         audio.addEventListener('ended', () => {
             if (continuousMode && surah) {
-                const nextAyahIndex = surah.ayahs.findIndex(a => a.numberInSurah === ayah.numberInSurah) + 1;
-                if (nextAyahIndex < surah.ayahs.length) {
-                    playAyah(surah.ayahs[nextAyahIndex]);
+                const nextIdx = surah.ayahs.findIndex(a => a.numberInSurah === ayah.numberInSurah) + 1;
+                if (nextIdx < surah.ayahs.length) {
+                    playAyah(surah.ayahs[nextIdx]);
                     return;
                 }
             }
@@ -85,7 +82,6 @@ export default function SurahPage({ params }) {
         setAudioProgress(0);
     };
 
-    // Cleanup on unmount
     useEffect(() => {
         return () => {
             if (audioRef.current) {
@@ -103,7 +99,7 @@ export default function SurahPage({ params }) {
                 </div>
                 <div className="loading-container">
                     <div className="spinner"></div>
-                    <span className="loading-text">Mengambil data surah & audio...</span>
+                    <span className="loading-text">Mengambil data surah & terjemahan...</span>
                 </div>
             </div>
         );
@@ -117,17 +113,20 @@ export default function SurahPage({ params }) {
                 </div>
                 <div className="error-container">
                     <p>{error || 'Surah tidak ditemukan'}</p>
-                    <Link href="/quran" className={styles.backLink}>
-                        ← Kembali ke daftar surah
-                    </Link>
+                    <Link href="/quran" className={styles.backLink}>← Kembali ke daftar surah</Link>
                 </div>
             </div>
         );
     }
 
+    // Build translation maps
+    const enMap = {};
+    const idMap = {};
+    if (translationEn?.ayahs) translationEn.ayahs.forEach(a => { enMap[a.numberInSurah] = a.text; });
+    if (translationId?.ayahs) translationId.ayahs.forEach(a => { idMap[a.numberInSurah] = a.text; });
+
     return (
         <div className="container">
-            {/* Back Button */}
             <Link href="/quran" className={styles.backButton}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M15 18l-6-6 6-6" />
@@ -136,7 +135,7 @@ export default function SurahPage({ params }) {
             </Link>
 
             {/* Surah Header */}
-            <div className={`${styles.surahHeader} glass-card fade-in-up`}>
+            <div className={`${styles.surahHeader} fade-in-up`}>
                 <div className={styles.headerPattern}></div>
                 <div className={styles.headerContent}>
                     <h1 className={styles.surahArabicName}>{surah.name}</h1>
@@ -150,82 +149,85 @@ export default function SurahPage({ params }) {
                         <span className={styles.statText}>{surah.numberOfAyahs} Ayat</span>
                     </div>
                 </div>
-                {/* Bismillah - except for At-Tawbah (surah 9) */}
-                {surah.number !== 9 && (
-                    <div className={styles.bismillah}>﷽</div>
-                )}
+                {surah.number !== 9 && <div className={styles.bismillah}>﷽</div>}
             </div>
 
-            {/* Playback Controls */}
+            {/* Playback & Translation Controls */}
             <div className={`${styles.playbackControls} glass-card fade-in-up`}>
                 <button
                     className={`${styles.playAllBtn} ${isPlaying ? styles.playing : ''}`}
                     onClick={() => {
-                        if (isPlaying) {
-                            stopAudio();
-                        } else if (surah.ayahs.length > 0) {
-                            setContinuousMode(true);
-                            playAyah(surah.ayahs[0]);
-                        }
+                        if (isPlaying) { stopAudio(); }
+                        else if (surah.ayahs.length > 0) { setContinuousMode(true); playAyah(surah.ayahs[0]); }
                     }}
                 >
                     {isPlaying ? (
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <rect x="6" y="4" width="4" height="16" />
-                            <rect x="14" y="4" width="4" height="16" />
-                        </svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></svg>
                     ) : (
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                            <polygon points="5 3 19 12 5 21 5 3" />
-                        </svg>
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>
                     )}
                     <span>{isPlaying ? 'Pause' : 'Putar Semua'}</span>
                 </button>
-                <label className={styles.continuousToggle}>
-                    <input
-                        type="checkbox"
-                        checked={continuousMode}
-                        onChange={(e) => setContinuousMode(e.target.checked)}
-                    />
+                <label className={styles.toggleOption}>
+                    <input type="checkbox" checked={continuousMode} onChange={(e) => setContinuousMode(e.target.checked)} />
                     <span className={styles.toggleSlider}></span>
                     <span className={styles.toggleLabel}>Auto</span>
                 </label>
+            </div>
+
+            {/* Translation toggles */}
+            <div className={`${styles.translationControls} glass-card fade-in-up`}>
+                <span className={styles.translationTitle}>Terjemahan:</span>
+                <div className={styles.translationOptions}>
+                    <label className={styles.translationToggle}>
+                        <input type="checkbox" checked={showTranslationId} onChange={(e) => setShowTranslationId(e.target.checked)} />
+                        <span className={styles.checkboxCustom}>
+                            {showTranslationId && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>}
+                        </span>
+                        <span className={styles.toggleLabel}>🇮🇩 Indonesia</span>
+                    </label>
+                    <label className={styles.translationToggle}>
+                        <input type="checkbox" checked={showTranslationEn} onChange={(e) => setShowTranslationEn(e.target.checked)} />
+                        <span className={styles.checkboxCustom}>
+                            {showTranslationEn && <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>}
+                        </span>
+                        <span className={styles.toggleLabel}>🇬🇧 English</span>
+                    </label>
+                </div>
             </div>
 
             {/* Ayah List */}
             <div className={styles.ayahList}>
                 {surah.ayahs.map((ayah) => {
                     const isCurrentlyPlaying = playingAyah === ayah.numberInSurah;
+                    const idText = idMap[ayah.numberInSurah];
+                    const enText = enMap[ayah.numberInSurah];
+
                     return (
-                        <div
-                            key={ayah.numberInSurah}
-                            className={`${styles.ayahCard} ${isCurrentlyPlaying ? styles.ayahPlaying : ''}`}
-                        >
+                        <div key={ayah.numberInSurah} className={`${styles.ayahCard} ${isCurrentlyPlaying ? styles.ayahPlaying : ''}`}>
                             <div className={styles.ayahHeader}>
                                 <span className={styles.ayahNumber}>{ayah.numberInSurah}</span>
                                 <button
                                     className={`audio-btn ${isCurrentlyPlaying && isPlaying ? 'playing' : ''}`}
-                                    onClick={() => {
-                                        setContinuousMode(false);
-                                        togglePlayPause(ayah);
-                                    }}
+                                    onClick={() => { setContinuousMode(false); togglePlayPause(ayah); }}
                                 >
                                     {isCurrentlyPlaying && isPlaying ? (
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <rect x="6" y="4" width="4" height="16" />
-                                            <rect x="14" y="4" width="4" height="16" />
-                                        </svg>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" /><rect x="14" y="4" width="4" height="16" /></svg>
                                     ) : (
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-                                            <polygon points="5 3 19 12 5 21 5 3" />
-                                        </svg>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3" /></svg>
                                     )}
                                 </button>
                             </div>
 
-                            <p className={`${styles.ayahText} arabic-text`}>
-                                {ayah.text}
-                            </p>
+                            <p className={`${styles.ayahText} arabic-text`}>{ayah.text}</p>
+
+                            {showTranslationId && idText && (
+                                <p className={styles.translationTextId}>{idText}</p>
+                            )}
+
+                            {showTranslationEn && enText && (
+                                <p className={styles.translationTextEn}>{enText}</p>
+                            )}
 
                             {isCurrentlyPlaying && (
                                 <div className="audio-player">

@@ -1,8 +1,127 @@
-.location {
-    display: inline-flex;
+/* Location Selector */
+.locationSelector {
+    position: relative;
+    margin-bottom: 16px;
+    z-index: 50;
+}
+
+.locationBtn {
+    display: flex;
     align-items: center;
-    color: var(--text-secondary);
+    gap: 8px;
+    width: 100%;
+    padding: 12px 16px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    color: var(--text-primary);
+    font-family: var(--font-latin);
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    box-shadow: var(--card-shadow);
+}
+
+.locationBtn:hover {
+    border-color: var(--emerald-500);
+}
+
+.locationBtn svg:first-child {
+    color: var(--emerald-600);
+}
+
+.locationBtn span {
+    flex: 1;
+    text-align: left;
+}
+
+.cityPicker {
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    right: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    max-height: 360px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.citySearchWrap {
+    padding: 12px;
+    border-bottom: 1px solid var(--gray-100);
+}
+
+.citySearchInput {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    font-family: var(--font-latin);
+    font-size: 0.875rem;
+    color: var(--text-primary);
+    outline: none;
+    background: var(--gray-50);
+}
+
+.citySearchInput:focus {
+    border-color: var(--emerald-500);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.currentLocBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    color: var(--emerald-700);
+    font-family: var(--font-latin);
     font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 1px solid var(--gray-100);
+    transition: background var(--transition-fast);
+}
+
+.currentLocBtn:hover {
+    background: rgba(16, 185, 129, 0.06);
+}
+
+.cityList {
+    overflow-y: auto;
+    max-height: 240px;
+}
+
+.cityItem {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    text-align: left;
+    font-family: var(--font-latin);
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.cityItem:hover {
+    background: var(--gray-50);
+}
+
+.cityItem.cityActive {
+    background: rgba(16, 185, 129, 0.08);
+    color: var(--emerald-700);
+    font-weight: 600;
 }
 
 /* Date Card */
@@ -11,7 +130,7 @@
     align-items: center;
     justify-content: space-between;
     padding: 16px 20px;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .dateInfo {
@@ -27,8 +146,8 @@
 
 .dateHijri {
     font-size: 0.8rem;
-    color: var(--gold-400);
-    font-weight: 400;
+    color: var(--gold-500);
+    font-weight: 500;
 }
 
 .dateIcon {
@@ -53,12 +172,12 @@
 
 .prayerCard.nextPrayer {
     border-color: var(--emerald-500);
-    background: rgba(16, 185, 129, 0.12);
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+    background: rgba(16, 185, 129, 0.04);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.08);
 }
 
 .prayerCard.passedPrayer {
-    opacity: 0.5;
+    opacity: 0.45;
 }
 
 .prayerLeft {
@@ -75,7 +194,7 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--radius-md);
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--gray-50);
 }
 
 .prayerInfo {
@@ -101,8 +220,8 @@
 .wajibBadge {
     font-size: 0.55rem;
     padding: 1px 6px;
-    background: rgba(16, 185, 129, 0.15);
-    color: var(--emerald-400);
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--emerald-700);
     border-radius: var(--radius-full);
     font-weight: 600;
     text-transform: uppercase;
@@ -132,22 +251,9 @@
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
-    animation: pulseGlow 2s ease-in-out infinite;
-}
-
-@keyframes pulseGlow {
-
-    0%,
-    100% {
-        box-shadow: 0 0 6px rgba(16, 185, 129, 0.3);
-    }
-
-    50% {
-        box-shadow: 0 0 14px rgba(16, 185, 129, 0.6);
-    }
 }
 
 .checkIcon {
     color: var(--emerald-500);
-    opacity: 0.7;
+    opacity: 0.6;
 }

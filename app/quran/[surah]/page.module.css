@@ -11,13 +11,13 @@
 }
 
 .backButton:hover {
-    color: var(--emerald-400);
+    color: var(--emerald-600);
 }
 
 .backLink {
     display: inline-block;
     margin-top: 16px;
-    color: var(--emerald-400);
+    color: var(--emerald-600);
     text-decoration: none;
     font-size: 0.9rem;
 }
@@ -33,6 +33,9 @@
     padding: 28px 20px 24px;
     margin-bottom: 16px;
     overflow: hidden;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, #065f46, #047857);
+    color: white;
 }
 
 .headerPattern {
@@ -41,8 +44,8 @@
     left: 0;
     right: 0;
     bottom: 0;
-    opacity: 0.05;
-    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a843' fill-opacity='1'%3E%3Cpath d='M30 0l7.5 22.5L60 30l-22.5 7.5L30 60l-7.5-22.5L0 30l22.5-7.5z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.06;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M30 0l7.5 22.5L60 30l-22.5 7.5L30 60l-7.5-22.5L0 30l22.5-7.5z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
 }
 
 .headerContent {
@@ -53,7 +56,7 @@
 .surahArabicName {
     font-family: var(--font-arabic);
     font-size: 2.2rem;
-    color: var(--gold-400);
+    color: #f0d875;
     margin-bottom: 4px;
     direction: rtl;
 }
@@ -61,13 +64,13 @@
 .surahEnglishName {
     font-size: 1.2rem;
     font-weight: 600;
-    color: var(--text-primary);
+    color: white;
     margin-bottom: 2px;
 }
 
 .surahTranslation {
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: rgba(255, 255, 255, 0.75);
     font-weight: 300;
     margin-bottom: 10px;
 }
@@ -80,21 +83,20 @@
 }
 
 .statDot {
-    color: var(--text-muted);
-    opacity: 0.5;
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .statText {
     font-size: 0.8rem;
-    color: var(--text-muted);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .bismillah {
     font-family: var(--font-arabic);
     font-size: 1.8rem;
-    color: var(--gold-400);
+    color: #f0d875;
     margin-top: 16px;
-    opacity: 0.7;
+    opacity: 0.85;
     position: relative;
     z-index: 1;
 }
@@ -106,6 +108,8 @@
     justify-content: space-between;
     padding: 12px 16px;
     margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
 }
 
 .playAllBtn {
@@ -133,23 +137,29 @@
     background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
 }
 
-/* Toggle Switch */
-.continuousToggle {
+.controlsRight {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 14px;
+}
+
+/* Toggle Switch */
+.toggleOption {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     cursor: pointer;
     user-select: none;
 }
 
-.continuousToggle input {
+.toggleOption input {
     display: none;
 }
 
 .toggleSlider {
-    width: 36px;
-    height: 20px;
-    background: rgba(255, 255, 255, 0.1);
+    width: 34px;
+    height: 18px;
+    background: var(--gray-300);
     border-radius: var(--radius-full);
     position: relative;
     transition: background var(--transition-fast);
@@ -158,20 +168,21 @@
 .toggleSlider::before {
     content: '';
     position: absolute;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: white;
     top: 2px;
     left: 2px;
     transition: transform var(--transition-fast);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
 }
 
-.continuousToggle input:checked+.toggleSlider {
+.toggleOption input:checked+.toggleSlider {
     background: var(--emerald-600);
 }
 
-.continuousToggle input:checked+.toggleSlider::before {
+.toggleOption input:checked+.toggleSlider::before {
     transform: translateX(16px);
 }
 
@@ -179,6 +190,36 @@
     font-size: 0.75rem;
     color: var(--text-muted);
     font-weight: 500;
+}
+
+/* Translation Checkbox */
+.translationToggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.translationToggle input {
+    display: none;
+}
+
+.checkboxCustom {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid var(--gray-300);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    background: white;
+}
+
+.translationToggle input:checked+.checkboxCustom {
+    background: var(--emerald-600);
+    border-color: var(--emerald-600);
 }
 
 /* Ayah List */
@@ -191,16 +232,17 @@
 
 .ayahCard {
     padding: 16px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: var(--radius-md);
     transition: all var(--transition-normal);
+    box-shadow: var(--card-shadow);
 }
 
 .ayahCard.ayahPlaying {
     border-color: var(--emerald-500);
-    background: rgba(16, 185, 129, 0.1);
-    box-shadow: 0 0 16px rgba(16, 185, 129, 0.15);
+    background: rgba(16, 185, 129, 0.03);
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.08);
 }
 
 .ayahHeader {
@@ -217,17 +259,56 @@
     align-items: center;
     justify-content: center;
     border-radius: 50%;
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(212, 168, 67, 0.1));
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
     font-size: 0.75rem;
     font-weight: 700;
-    color: var(--emerald-400);
+    color: var(--emerald-700);
 }
 
 .ayahText {
     font-size: 1.6rem;
     line-height: 2.4;
-    color: var(--cream-100);
+    color: var(--text-primary);
     padding: 8px 0;
     word-spacing: 4px;
+}
+
+.translationTextId {
+    font-size: 0.85rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    padding: 8px 0 4px;
+    border-top: 1px solid var(--gray-100);
+    margin-top: 4px;
+}
+
+.translationTextEn {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--text-muted);
+    padding: 4px 0 4px;
+    font-style: italic;
+}
+
+/* Translation Controls Bar */
+.translationControls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+}
+
+.translationTitle {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.translationOptions {
+    display: flex;
+    align-items: center;
+    gap: 14px;
 }
