@@ -1,0 +1,74 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--gray-200);
+    height: var(--navbar-height);
+}
+
+.navInner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 100%;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    color: var(--emerald-800);
+}
+
+.brandIcon {
+    font-size: 1.4rem;
+}
+
+.brandText {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+}
+
+.navLinks {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* ✅ MOBILE: sembunyikan menu */
+@media (max-width: 768px) {
+    .navLinks {
+        display: none;
+    }
+}
+
+z .navLink {
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-muted);
+    transition: all var(--transition-fast);
+}
+
+.navLink:hover {
+    color: var(--emerald-700);
+    background: rgba(16, 185, 129, 0.06);
+}
+
+.navLink.active {
+    color: var(--emerald-800);
+    background: rgba(16, 185, 129, 0.1);
+    font-weight: 600;
+}
