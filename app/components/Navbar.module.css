@@ -52,7 +52,7 @@
     }
 }
 
-z .navLink {
+.navLink {
     padding: 8px 16px;
     border-radius: var(--radius-full);
     text-decoration: none;
