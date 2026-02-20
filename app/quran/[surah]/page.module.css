@@ -1,0 +1,233 @@
+/* Back Button */
+.backButton {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.85rem;
+    padding: 12px 0 4px;
+    transition: color var(--transition-fast);
+}
+
+.backButton:hover {
+    color: var(--emerald-400);
+}
+
+.backLink {
+    display: inline-block;
+    margin-top: 16px;
+    color: var(--emerald-400);
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.backLink:hover {
+    text-decoration: underline;
+}
+
+/* Surah Header */
+.surahHeader {
+    position: relative;
+    text-align: center;
+    padding: 28px 20px 24px;
+    margin-bottom: 16px;
+    overflow: hidden;
+}
+
+.headerPattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4a843' fill-opacity='1'%3E%3Cpath d='M30 0l7.5 22.5L60 30l-22.5 7.5L30 60l-7.5-22.5L0 30l22.5-7.5z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.headerContent {
+    position: relative;
+    z-index: 1;
+}
+
+.surahArabicName {
+    font-family: var(--font-arabic);
+    font-size: 2.2rem;
+    color: var(--gold-400);
+    margin-bottom: 4px;
+    direction: rtl;
+}
+
+.surahEnglishName {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.surahTranslation {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.surahStats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.statDot {
+    color: var(--text-muted);
+    opacity: 0.5;
+}
+
+.statText {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+.bismillah {
+    font-family: var(--font-arabic);
+    font-size: 1.8rem;
+    color: var(--gold-400);
+    margin-top: 16px;
+    opacity: 0.7;
+    position: relative;
+    z-index: 1;
+}
+
+/* Playback Controls */
+.playbackControls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+}
+
+.playAllBtn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 20px;
+    border: none;
+    border-radius: var(--radius-full);
+    background: linear-gradient(135deg, var(--emerald-600), var(--emerald-700));
+    color: white;
+    font-family: var(--font-latin);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.playAllBtn:hover {
+    background: linear-gradient(135deg, var(--emerald-500), var(--emerald-600));
+    transform: scale(1.02);
+}
+
+.playAllBtn.playing {
+    background: linear-gradient(135deg, var(--gold-500), var(--gold-600));
+}
+
+/* Toggle Switch */
+.continuousToggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.continuousToggle input {
+    display: none;
+}
+
+.toggleSlider {
+    width: 36px;
+    height: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-full);
+    position: relative;
+    transition: background var(--transition-fast);
+}
+
+.toggleSlider::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: white;
+    top: 2px;
+    left: 2px;
+    transition: transform var(--transition-fast);
+}
+
+.continuousToggle input:checked+.toggleSlider {
+    background: var(--emerald-600);
+}
+
+.continuousToggle input:checked+.toggleSlider::before {
+    transform: translateX(16px);
+}
+
+.toggleLabel {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-weight: 500;
+}
+
+/* Ayah List */
+.ayahList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.ayahCard {
+    padding: 16px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+}
+
+.ayahCard.ayahPlaying {
+    border-color: var(--emerald-500);
+    background: rgba(16, 185, 129, 0.1);
+    box-shadow: 0 0 16px rgba(16, 185, 129, 0.15);
+}
+
+.ayahHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.ayahNumber {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(212, 168, 67, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--emerald-400);
+}
+
+.ayahText {
+    font-size: 1.6rem;
+    line-height: 2.4;
+    color: var(--cream-100);
+    padding: 8px 0;
+    word-spacing: 4px;
+}

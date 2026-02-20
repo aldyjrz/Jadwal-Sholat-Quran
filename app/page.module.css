@@ -1,0 +1,263 @@
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 32px 20px 24px;
+  margin-top: 8px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(135deg, rgba(6, 78, 59, 0.4), rgba(4, 120, 87, 0.2));
+  border: 1px solid var(--glass-border);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.heroPattern {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2310b981' fill-opacity='1'%3E%3Cpath d='M40 0l10 30L80 40l-30 10L40 80l-10-30L0 40l30-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+}
+
+.arabicGreeting {
+  font-family: var(--font-arabic);
+  font-size: 1.5rem;
+  color: var(--gold-400);
+  margin-bottom: 4px;
+  direction: rtl;
+}
+
+.greeting {
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--emerald-300), var(--gold-400));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+
+.hijriDate {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  font-weight: 300;
+}
+
+.bismillah {
+  font-family: var(--font-arabic);
+  font-size: 2.2rem;
+  color: var(--gold-400);
+  margin-top: 16px;
+  position: relative;
+  z-index: 1;
+  opacity: 0.8;
+}
+
+/* Next Prayer Card */
+.nextPrayerCard {
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.nextPrayerHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.nextPrayerLoading {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.nextPrayerInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.nextPrayerName {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--emerald-300);
+}
+
+.nextPrayerTime {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--gold-400);
+  font-variant-numeric: tabular-nums;
+}
+
+.noData {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 16px 0;
+}
+
+/* Countdown */
+.countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.countdownUnit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 52px;
+}
+
+.countdownNumber {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.countdownLabel {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-top: 4px;
+}
+
+.countdownSeparator {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--emerald-500);
+  margin-bottom: 14px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Quick Access Cards */
+.quickAccess {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.quickCard {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  text-decoration: none;
+  color: var(--text-primary);
+  cursor: pointer;
+}
+
+.quickCard:hover {
+  transform: translateY(-2px);
+}
+
+.quickIcon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.quickInfo {
+  flex: 1;
+}
+
+.quickInfo h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.quickInfo p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  font-weight: 300;
+}
+
+.quickArrow {
+  color: var(--text-muted);
+  opacity: 0.5;
+  flex-shrink: 0;
+}
+
+/* Today's Prayers */
+.todayPrayers {
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.prayerGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.prayerMiniCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 14px 8px;
+  text-align: center;
+  gap: 6px;
+}
+
+.prayerMiniCard.activePrayer {
+  border-color: var(--emerald-500);
+  background: rgba(16, 185, 129, 0.15);
+  box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+}
+
+.prayerEmoji {
+  font-size: 1.3rem;
+}
+
+.prayerMiniName {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.prayerMiniTime {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums;
+}

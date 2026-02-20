@@ -1,0 +1,101 @@
+.surahList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.surahCard {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    text-decoration: none;
+    color: var(--text-primary);
+    cursor: pointer;
+}
+
+.surahNumber {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(212, 168, 67, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    flex-shrink: 0;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--emerald-400);
+    position: relative;
+}
+
+/* Diamond shape around number */
+.surahNumber::before {
+    content: '';
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    border: 1px solid rgba(16, 185, 129, 0.12);
+    transform: rotate(45deg);
+    border-radius: 3px;
+}
+
+.surahInfo {
+    flex: 1;
+    min-width: 0;
+}
+
+.surahNameRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.surahLatin {
+    font-size: 0.95rem;
+    font-weight: 600;
+}
+
+.surahArabic {
+    font-family: var(--font-arabic);
+    font-size: 1.2rem;
+    color: var(--gold-400);
+    direction: rtl;
+}
+
+.surahMeta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+
+.ayahCount {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+}
+
+.surahMeaning {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    font-weight: 300;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.surahArrow {
+    color: var(--text-muted);
+    opacity: 0.4;
+    flex-shrink: 0;
+}
+
+.emptyState {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}

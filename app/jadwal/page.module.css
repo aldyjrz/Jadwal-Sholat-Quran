@@ -1,0 +1,153 @@
+.location {
+    display: inline-flex;
+    align-items: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+
+/* Date Card */
+.dateCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+}
+
+.dateInfo {
+    flex: 1;
+}
+
+.dateGregorian {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 2px;
+}
+
+.dateHijri {
+    font-size: 0.8rem;
+    color: var(--gold-400);
+    font-weight: 400;
+}
+
+.dateIcon {
+    font-size: 1.8rem;
+}
+
+/* Prayer List */
+.prayerList {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.prayerCard {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px;
+    transition: all var(--transition-normal);
+}
+
+.prayerCard.nextPrayer {
+    border-color: var(--emerald-500);
+    background: rgba(16, 185, 129, 0.12);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+.prayerCard.passedPrayer {
+    opacity: 0.5;
+}
+
+.prayerLeft {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.prayerIcon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.prayerInfo {
+    display: flex;
+    flex-direction: column;
+}
+
+.prayerName {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.prayerDesc {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    margin-top: 2px;
+}
+
+.wajibBadge {
+    font-size: 0.55rem;
+    padding: 1px 6px;
+    background: rgba(16, 185, 129, 0.15);
+    color: var(--emerald-400);
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.prayerRight {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+}
+
+.prayerTime {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+}
+
+.nextBadge {
+    font-size: 0.55rem;
+    padding: 2px 8px;
+    background: linear-gradient(135deg, var(--emerald-600), var(--emerald-700));
+    color: white;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    animation: pulseGlow 2s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+
+    0%,
+    100% {
+        box-shadow: 0 0 6px rgba(16, 185, 129, 0.3);
+    }
+
+    50% {
+        box-shadow: 0 0 14px rgba(16, 185, 129, 0.6);
+    }
+}
+
+.checkIcon {
+    color: var(--emerald-500);
+    opacity: 0.7;
+}
