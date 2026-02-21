@@ -11,6 +11,8 @@ export default function Navbar() {
         { href: '/', label: 'Beranda' },
         { href: '/jadwal', label: 'Jadwal Sholat' },
         { href: '/quran', label: "Al-Qur'an" },
+        { href: '/screen', label: "Layar" },
+        { href: '/admin', label: "Pengaturan" },
     ];
 
     return (

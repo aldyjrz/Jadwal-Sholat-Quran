@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body TV Mode */
+body {
+    background: black;
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Smooth font */
+h1,
+h2,
+h3 {
+    letter-spacing: 1px;
+}
+
+/* Glass Effect */
+.glass {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+}
+
+/* Countdown Box */
+.countdown-box {
+    background: linear-gradient(135deg, #b91c1c, #7f1d1d);
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.6);
+}
+
+/* Prayer highlight */
+.highlight-prayer {
+    border: 4px solid #facc15;
+    box-shadow: 0 0 20px #facc15;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+}
+
+/* Running text */
+.running-text {
+    position: absolute;
+    bottom: 0;
+    white-space: nowrap;
+    animation: marquee 20s linear infinite;
+    font-size: 1.2rem;
+    color: #facc15;
+}
+
+@keyframes marquee {
+    0% {
+        transform: translateX(100%);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}

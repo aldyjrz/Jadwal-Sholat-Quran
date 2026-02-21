@@ -1,7 +1,5 @@
 import './globals.css';
-import Navbar from './components/Navbar';
-import BottomNav from './components/BottomNav';
-import Footer from './components/Footer';
+import ClientWrapper from './components/ClientWrapper';
 
 export const metadata = {
   title: 'Jadwal Sholat & Al-Quran',
@@ -17,10 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="id">
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
-        <BottomNav />
+        <ClientWrapper>
+          {children}
+        </ClientWrapper>
       </body>
     </html>
   );

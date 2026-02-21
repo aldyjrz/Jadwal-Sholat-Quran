@@ -1,0 +1,14 @@
+{
+  "masjid_name": "Masjid Tsabit",
+  "address": "Jl Kincan Raya RT 04/14 No47, Jatibening, Pondok Gede 17412",
+  "footer_text": "Matikan Ponsel Anda",
+  "latitude": -6.2088,
+  "longitude": 106.8456,
+  "slide_duration": 15000,
+  "running_texts": [
+    "Matikan Ponsel Anda",
+    "Sholat adalah tiang agama",
+    "Selamat menjalankan ibadah puasa"
+  ],
+  "theme": "emerald"
+}
