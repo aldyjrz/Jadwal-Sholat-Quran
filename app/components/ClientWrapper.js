@@ -11,7 +11,7 @@ export default function ClientWrapper({ children }) {
     // Jika ini adalah halaman /screen, jangan tampilkan Navbar, BottomNav, atau Footer
     // Selain itu hilangkan <main> padding untuk /screen agar full screen sempurna
     if (isScreen) {
-        return <main className="m-0 p-0 h-screen w-screen overflow-hidden">{children}</main>
+        return <div className="fixed inset-0 m-0 p-0 w-screen h-screen overflow-hidden bg-black z-50">{children}</div>
     }
 
     return (

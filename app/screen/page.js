@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import SlideJadwal from '../components/SlideJadwal';
 import SlideHadist from '../components/SlideHadist';
 import SlideMedia from '../components/SlideMedia';
+import ScreenOverlay from '../components/ScreenOverlay';
 
 const PRAYER_LIST = [
     { name: 'Subuh', key: 'Fajr' },
@@ -128,8 +129,13 @@ export default function DisplayPage() {
     return (
         <div className="relative bg-black w-screen h-screen overflow-hidden">
             {current === "jadwal" && <SlideJadwal settings={settings} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />}
-            {current === "hadist" && <SlideHadist />}
+            {current === "hadist" && <SlideHadist settings={settings} />}
             {current !== "jadwal" && current !== "hadist" && <SlideMedia src={current} />}
+
+            {/* Display Header/Footer overlay on all slides except 'jadwal' */}
+            {current !== "jadwal" && (
+                <ScreenOverlay settings={settings} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />
+            )}
 
             {countdown !== null && (
                 <div className="absolute inset-0 bg-black/80 flex items-center justify-center z-50">
