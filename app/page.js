@@ -203,6 +203,25 @@ export default function HomePage() {
             <path d="M9 18l6-6-6-6" />
           </svg>
         </Link>
+         <Link href="/doa" className={`${styles.quickCard} glass-card`}>
+          <div className={styles.quickIcon} style={{ background: 'linear-gradient(135deg, #8b5cf6, #7c3aed)' }}>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 9c0 0 0-2 2-2s2 2 2 2" />
+              <path d="M18 9c0 0 0-2-2-2s-2 2-2 2" />
+              <path d="M12 5v2" />
+              <path d="M12 7c0 0-3 0-3 3v8c0 2 1 3 3 3s3-1 3-3v-8c0-3-3-3-3-3z" />
+              <path d="M9 12h6" />
+              <path d="M9 16h6" />
+            </svg>
+          </div>
+          <div className={styles.quickInfo}>
+            <h3>Doa Harian</h3>
+            <p>Kumpulan doa yang penting</p>
+          </div>
+          <svg className={styles.quickArrow} width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </Link>
       </section>
 
       {/* Today's Prayer Overview */}
