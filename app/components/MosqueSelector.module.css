@@ -1,0 +1,274 @@
+.container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #f0fdf4, #ccfbf1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.card {
+  background-color: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  border: 1px solid #d1fae5;
+  max-width: 42rem;
+  width: 100%;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.header {
+  text-align: center;
+}
+
+.title {
+  font-size: 2.25rem;
+  font-weight: 800;
+  color: #059669;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #047857;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #d1fae5;
+  padding-bottom: 0.75rem;
+}
+
+.mosqueList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.mosqueItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem;
+  border: 2px solid #d1fae5;
+  border-radius: 1rem;
+  transition: all 0.3s ease;
+}
+
+.mosqueItem:hover {
+  border-color: #059669;
+  background-color: #f0fdf4;
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.1);
+}
+
+.mosqueInfo {
+  flex: 1;
+}
+
+.mosqueName {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #065f46;
+  margin-bottom: 0.25rem;
+}
+
+.mosqueAddress {
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-bottom: 0.5rem;
+}
+
+.mosqueCoords {
+  color: #4b5563;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.selectBtn {
+  padding: 0.75rem 1.5rem;
+  background-color: #10b981;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-left: 1rem;
+}
+
+.selectBtn:hover {
+  background-color: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+}
+
+.selectBtn.selected {
+  background-color: #047857;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.2);
+}
+
+.addBtn {
+  width: 100%;
+  padding: 1rem;
+  background-color: #f3f4f6;
+  color: #059669;
+  border: 2px dashed #059669;
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1.5rem;
+}
+
+.addBtn:hover {
+  background-color: #f0fdf4;
+  border-color: #047857;
+  color: #047857;
+}
+
+.form {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid #d1fae5;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1.5rem;
+}
+
+.label {
+  font-weight: 600;
+  color: #047857;
+  margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.input {
+  padding: 0.75rem 1rem;
+  border: 2px solid #d1fae5;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  color: #1f2937;
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+  background-color: #f0fdf4;
+}
+
+.formRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.hint {
+  color: #6b7280;
+  font-size: 0.875rem;
+  background-color: #fffbeb;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  border-left: 4px solid #f59e0b;
+}
+
+.formButtons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.submitBtn {
+  flex: 1;
+  padding: 1rem;
+  background-color: #059669;
+  color: white;
+  border: none;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.submitBtn:hover {
+  background-color: #047857;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.4);
+}
+
+.cancelBtn {
+  flex: 1;
+  padding: 1rem;
+  background-color: #f3f4f6;
+  color: #6b7280;
+  border: 2px solid #d1fae5;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelBtn:hover {
+  background-color: #f9fafb;
+  border-color: #c7d2fe;
+  color: #374151;
+}
+
+.loader {
+  text-align: center;
+  padding: 2rem;
+  color: #059669;
+  font-weight: 600;
+  font-size: 1.125rem;
+}
+
+@media (max-width: 768px) {
+  .card {
+    padding: 1.5rem;
+  }
+
+  .title {
+    font-size: 1.875rem;
+  }
+
+  .mosqueItem {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .selectBtn {
+    margin-left: 0;
+    margin-top: 1rem;
+    width: 100%;
+  }
+
+  .formRow {
+    grid-template-columns: 1fr;
+  }
+
+  .formButtons {
+    flex-direction: column;
+  }
+}

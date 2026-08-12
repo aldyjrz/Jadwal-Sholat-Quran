@@ -9,7 +9,7 @@ const PRAYER_LIST = [
     { name: 'Isya', key: 'Isha' },
 ]
 
-export default function ScreenOverlay({ settings, providedPrayerTimes, providedNextPrayer }) {
+export default function ScreenOverlay({ settings, selectedMosque, providedPrayerTimes, providedNextPrayer }) {
     const [currentTime, setCurrentTime] = useState(new Date())
     const [countdownStr, setCountdownStr] = useState("")
 
@@ -55,13 +55,13 @@ export default function ScreenOverlay({ settings, providedPrayerTimes, providedN
             {/* Top Header Overlay */}
             <div className="bg-gradient-to-b from-black/80 to-transparent pt-8 pb-16 px-10 flex justify-between items-start">
                 <div className="text-white drop-shadow-md">
-                    <h1 className="text-4xl font-extrabold text-white mb-2">{settings?.masjid_name}</h1>
+                    <h1 className="text-4xl font-extrabold text-white mb-2">{selectedMosque?.masjid_name || settings?.masjid_name}</h1>
                     <p className="text-xl text-gray-200 flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                         </svg>
-                        {settings?.address}
+                        {selectedMosque?.address || settings?.address}
                     </p>
                 </div>
 

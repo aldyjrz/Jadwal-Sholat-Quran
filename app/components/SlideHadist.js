@@ -36,7 +36,7 @@ const THEMES = {
     }
 }
 
-export default function SlideHadist({ settings, providedPrayerTimes, providedNextPrayer }) {
+export default function SlideHadist({ settings, selectedMosque, providedPrayerTimes, providedNextPrayer }) {
     const [hadist, setHadist] = useState("")
     const activeTheme = THEMES[settings?.theme] || THEMES.emerald;
 

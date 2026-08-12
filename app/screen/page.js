@@ -246,13 +246,13 @@ export default function DisplayPage() {
 
     return (
         <div className="relative bg-black w-screen h-screen overflow-hidden">
-            {current === "jadwal" && <SlideJadwal settings={settings} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />}
-            {current === "hadist" && <SlideHadist settings={settings} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />}
+            {current === "jadwal" && <SlideJadwal settings={settings} selectedMosque={selectedMosque} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />}
+            {current === "hadist" && <SlideHadist settings={settings} selectedMosque={selectedMosque} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />}
             {current !== "jadwal" && current !== "hadist" && <SlideMedia src={current} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />}
 
             {/* Display Header/Footer overlay on all slides except 'jadwal' */}
             {current !== "jadwal" && (
-                <ScreenOverlay settings={settings} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />
+                <ScreenOverlay settings={settings} selectedMosque={selectedMosque} providedPrayerTimes={prayerTimes} providedNextPrayer={nextPrayer} />
             )}
 
             {/* ADZAN COUNTDOWN */}
