@@ -51,7 +51,7 @@ export default function ScreenOverlay({ settings, providedPrayerTimes, providedN
     const nextPrayerName = PRAYER_LIST.find(p => p.key === providedNextPrayer)?.name || ""
 
     return (
-        <div className="absolute inset-0 pointer-events-none flex flex-col justify-between z-40">
+        <div className="absolute inset-0 pointer-events-none flex flex-col justify-between z-40" style={{ marginLeft: '128px' }}>
             {/* Top Header Overlay */}
             <div className="bg-gradient-to-b from-black/80 to-transparent pt-8 pb-16 px-10 flex justify-between items-start">
                 <div className="text-white drop-shadow-md">

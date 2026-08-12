@@ -53,8 +53,8 @@ function getGreeting() {
 
 export default function HomePage() {
   const [hadist, setHadist] = useState(null);
-
-  const { prayerTimes, loading, hijriDate } = usePrayerTimes();
+  const {loading, setLoading} = useState(true);
+  const { prayerTimes, hijriDate } = usePrayerTimes();
   const [nextPrayer, setNextPrayer] = useState(null);
   const greeting = getGreeting();
 

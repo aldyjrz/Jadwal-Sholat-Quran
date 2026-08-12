@@ -5,6 +5,13 @@ export default function AdminPage() {
     const [settings, setSettings] = useState(null)
     const [media, setMedia] = useState([])
     const [uploading, setUploading] = useState(false)
+    const [showAddMosque, setShowAddMosque] = useState(false)
+    const [newMosque, setNewMosque] = useState({
+        masjid_name: '',
+        address: '',
+        latitude: '',
+        longitude: ''
+    })
 
     useEffect(() => {
         fetch('/api/settings').then(r => r.json()).then(data => {
@@ -14,6 +21,8 @@ export default function AdminPage() {
                 data.running_texts = ["Mohon matikan ponsel anda."]
             }
             if (!data.theme) data.theme = "emerald"
+            // Ensure mosques array exists
+            if (!data.mosques) data.mosques = []
             setSettings(data)
         })
         fetch('/api/media').then(r => r.json()).then(setMedia)
@@ -65,6 +74,81 @@ export default function AdminPage() {
         }
     }
 
+    const handleAddMosque = async () => {
+        if (!newMosque.masjid_name || !newMosque.address || !newMosque.latitude || !newMosque.longitude) {
+            alert('Semua field masjid harus diisi');
+            return;
+        }
+
+        const mosque = {
+            id: Date.now().toString(),
+            masjid_name: newMosque.masjid_name,
+            address: newMosque.address,
+            latitude: parseFloat(newMosque.latitude),
+            longitude: parseFloat(newMosque.longitude)
+        };
+
+        const mosques = settings.mosques ? [...settings.mosques, mosque] : [mosque];
+        const updated = {
+            ...settings,
+            mosques,
+            selected_mosque_id: mosque.id
+        };
+
+        await fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updated)
+        });
+
+        setSettings(updated);
+        setNewMosque({ masjid_name: '', address: '', latitude: '', longitude: '' });
+        setShowAddMosque(false);
+        alert('Masjid berhasil ditambahkan dan dipilih');
+    }
+
+    const handleDeleteMosque = async (mosqueId) => {
+        if (!confirm('Hapus masjid ini? Data jadwal akan hilang jika hanya 1 masjid.')) return;
+
+        const mosques = settings.mosques.filter(m => m.id !== mosqueId);
+        let selected = settings.selected_mosque_id;
+        
+        // If deleted mosque was selected, select the first one
+        if (selected === mosqueId && mosques.length > 0) {
+            selected = mosques[0].id;
+        }
+
+        const updated = {
+            ...settings,
+            mosques,
+            selected_mosque_id: selected
+        };
+
+        await fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updated)
+        });
+
+        setSettings(updated);
+        alert('Masjid berhasil dihapus');
+    }
+
+    const handleSelectMosque = async (mosqueId) => {
+        const updated = {
+            ...settings,
+            selected_mosque_id: mosqueId
+        };
+
+        await fetch('/api/settings', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(updated)
+        });
+
+        setSettings(updated);
+    }
+
     if (!settings) return <div className="p-10 flex items-center justify-center min-h-screen text-emerald-700">Loading...</div>
 
     return (
@@ -76,27 +160,127 @@ export default function AdminPage() {
                 </div>
 
                 <div className="space-y-6 bg-white p-8 rounded-2xl shadow-sm border border-emerald-100">
-                    <h2 className="text-2xl font-bold text-emerald-700 border-b border-emerald-100 pb-2">Informasi & Tema Masjid</h2>
+                    <h2 className="text-2xl font-bold text-emerald-700 border-b border-emerald-100 pb-2">🕌 Manajemen Masjid</h2>
+
+                    {/* List of mosques */}
+                    <div className="space-y-3">
+                        <label className="block text-sm font-semibold text-gray-700">Daftar Masjid Terdaftar</label>
+                        {settings.mosques && settings.mosques.length > 0 ? (
+                            <div className="space-y-2">
+                                {settings.mosques.map((mosque) => (
+                                    <div key={mosque.id} className="flex items-center justify-between p-4 border border-emerald-100 rounded-lg bg-emerald-50/30">
+                                        <div className="flex-1">
+                                            <p className="font-semibold text-emerald-900">{mosque.masjid_name}</p>
+                                            <p className="text-sm text-gray-600">{mosque.address}</p>
+                                            <p className="text-xs text-gray-500">📍 {mosque.latitude.toFixed(4)}, {mosque.longitude.toFixed(4)}</p>
+                                        </div>
+                                        <div className="flex gap-2 ml-4">
+                                            <button
+                                                onClick={() => handleSelectMosque(mosque.id)}
+                                                className={`px-4 py-2 rounded-lg font-semibold text-sm transition-all ${
+                                                    settings.selected_mosque_id === mosque.id
+                                                        ? 'bg-emerald-600 text-white'
+                                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                                                }`}
+                                            >
+                                                {settings.selected_mosque_id === mosque.id ? '✓ Aktif' : 'Pilih'}
+                                            </button>
+                                            <button
+                                                onClick={() => handleDeleteMosque(mosque.id)}
+                                                className="px-4 py-2 bg-red-100 text-red-600 rounded-lg font-semibold text-sm hover:bg-red-200"
+                                            >
+                                                Hapus
+                                            </button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <p className="text-gray-500 text-sm italic">Belum ada masjid terdaftar</p>
+                        )}
+                    </div>
+
+                    {/* Add new mosque form */}
+                    {!showAddMosque ? (
+                        <button
+                            onClick={() => setShowAddMosque(true)}
+                            className="w-full bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-dashed border-emerald-300 rounded-lg py-3 font-semibold transition"
+                        >
+                            + Tambah Masjid Baru
+                        </button>
+                    ) : (
+                        <div className="p-4 bg-blue-50 rounded-lg border border-blue-200 space-y-4">
+                            <h3 className="font-semibold text-blue-900">Daftarkan Masjid Baru</h3>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Nama Masjid *</label>
+                                    <input
+                                        className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                        value={newMosque.masjid_name}
+                                        onChange={e => setNewMosque({ ...newMosque, masjid_name: e.target.value })}
+                                        placeholder="Contoh: Masjid Nurul Huda"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Alamat *</label>
+                                    <input
+                                        className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                        value={newMosque.address}
+                                        onChange={e => setNewMosque({ ...newMosque, address: e.target.value })}
+                                        placeholder="Contoh: Jl. Ahmad Yani No. 10"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Latitude *</label>
+                                    <input
+                                        type="number"
+                                        step="0.0001"
+                                        className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                        value={newMosque.latitude}
+                                        onChange={e => setNewMosque({ ...newMosque, latitude: e.target.value })}
+                                        placeholder="Contoh: -6.2088"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-semibold text-gray-700 mb-2">Longitude *</label>
+                                    <input
+                                        type="number"
+                                        step="0.0001"
+                                        className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                        value={newMosque.longitude}
+                                        onChange={e => setNewMosque({ ...newMosque, longitude: e.target.value })}
+                                        placeholder="Contoh: 106.8456"
+                                    />
+                                </div>
+                            </div>
+
+                            <p className="text-xs text-gray-600 bg-yellow-50 p-2 rounded">
+                                💡 Dapatkan koordinat dari Google Maps dengan klik kanan → Koordinat
+                            </p>
+
+                            <div className="flex gap-3 pt-2">
+                                <button
+                                    onClick={handleAddMosque}
+                                    className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-4 py-3 rounded-lg transition"
+                                >
+                                    Tambahkan Masjid
+                                </button>
+                                <button
+                                    onClick={() => setShowAddMosque(false)}
+                                    className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold px-4 py-3 rounded-lg transition"
+                                >
+                                    Batal
+                                </button>
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div className="space-y-6 bg-white p-8 rounded-2xl shadow-sm border border-emerald-100">
+                    <h2 className="text-2xl font-bold text-emerald-700 border-b border-emerald-100 pb-2">Pengaturan Tampilan Layar</h2>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Nama Masjid</label>
-                            <input className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                value={settings.masjid_name || ''}
-                                onChange={e => setSettings({ ...settings, masjid_name: e.target.value })}
-                                placeholder="Contoh: Masjid Nurul Huda"
-                            />
-                        </div>
-
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Alamat / Lokasi</label>
-                            <input className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                value={settings.address || ''}
-                                onChange={e => setSettings({ ...settings, address: e.target.value })}
-                                placeholder="Contoh: Jakarta Selatan"
-                            />
-                        </div>
-
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Tema Warna Layar</label>
                             <select className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -144,23 +328,7 @@ export default function AdminPage() {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-emerald-100">
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Latitude (Untuk Jadwal)</label>
-                            <input className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                type="number" step="any"
-                                value={settings.latitude || ''}
-                                onChange={e => setSettings({ ...settings, latitude: parseFloat(e.target.value) })}
-                            />
-                        </div>
-                        <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">Longitude (Untuk Jadwal)</label>
-                            <input className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-                                type="number" step="any"
-                                value={settings.longitude || ''}
-                                onChange={e => setSettings({ ...settings, longitude: parseFloat(e.target.value) })}
-                            />
-                        </div>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 border-t border-emerald-100">
                         <div>
                             <label className="block text-sm font-semibold text-gray-700 mb-2">Durasi per Slide (ms)</label>
                             <input className="border border-gray-300 rounded-lg p-3 w-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500"
