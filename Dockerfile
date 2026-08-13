@@ -3,11 +3,12 @@ FROM node:20
 WORKDIR /usr/src/app
 COPY package*.json ./
 
-# Install dependencies
 RUN npm install 
-RUN npm build
+
 # Copy sisa source code
 COPY . .
 
+# Jalankan build dengan benar
+RUN npm run build
 EXPOSE 3131
 CMD ["sh", "-c", "npm start"]
